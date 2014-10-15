@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Zadanie</title>
+
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	  ">">https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+	  ">">https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+	<![endif]-->
+	<style>
+		body {
+			font-family: Helvetica, Arial, sans-serif;
+		}
+
+		h1, h2, h3 {
+			text-align: center;
+			margin: 10px 10px 20px;
+		}
+
+		h1 {
+			font-size: 1.8em;
+		}
+
+		h2 {
+			font-size: 1.4em;
+		}
+
+		.mainContainer {
+			max-width: 960px;
+			margin: 0 auto;
+		}
+
+		.mainContainer > section {
+			border: solid 1px #ddd;
+			border-radius: 4px 4px 0 0;
+			padding: 0 15px;
+			margin-bottom: 10px;
+		}
+
+		#jobsList, #jobsResults {
+			list-style: none;
+			line-height: 1.6em;
+		}
+
+		#jobsList li, #jobsResults li {
+			-webkit-animation: fadeIn .6s;
+			-o-animation: fadeIn .6s;
+			animation: fadeIn .6s;
+		}
+
+		#jobsResults > li:first-child {
+			font-size: 1.4em;
+		}
+
+		#jobsResults > li:nth-child(2) {
+			font-size: 1.3em;
+		}
+
+		#jobsResults > li:nth-child(3) {
+			font-size: 1.2em;
+		}
+
+		@keyframes fadeIn {
+			0% {
+				opacity: 0;
+			}
+			100% {
+				opacity: 1;
+			}
+		}
+
+		@-webkit-keyframes fadeIn {
+			0% {
+				opacity: 0;
+			}
+			100% {
+				opacity: 1;
+			}
+		}
+
+	</style>
+  </head>
+  <body>
+	<div class="mainContainer container-fluid">
+		<h1>Matematyka Dyskretna</h1>
+		<h2>Wyszukiwanie optymalnego pracowadcy</h2>
+		<section>
+			<h1>Ustawienia optymalne</h1>
+			<div class="row">
+				<div class="form-group col-xs-4">
+					<label for="salary">Pensja:</label>
+					<input type="number" name="salary" id="salary" class="form-control" min="0" placeholder="Np. 3000 (zł)">
+				</div>
+				<div class="form-group col-xs-4">
+					<label for="distance">Odległość:</label>
+					<input type="number" name="distance" id="distance" class="form-control" min="0" placeholder="Np. 3 (km)">
+				</div>
+				<div class="form-group col-xs-4">
+					<label for="size">Rozmiar firmy:</label>
+					<input type="number" name="size" id="size" class="form-control" min="0" placeholder="Np. 1000 (pracowników)">
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="row">
+				<div class="col-xs-6">
+					<h1>Dodaj pracowadcę</h1>
+					<div class="form-horizontal form-group row col-xs-12">
+						<label for="newJobSalary" class="col-sm-4 control-label">Pensja:</label>
+						<div class="col-sm-8">
+							<input type="number" name="newJobSalary" id="newJobSalary" class="form-control" min="0">
+						</div>
+					</div>
+					<div class="form-horizontal form-group row col-xs-12">
+						<label for="newJobDistance" class="col-sm-4 control-label">Odległość:</label>
+						<div class="col-sm-8">
+							<input type="number" name="newJobDistance" id="newJobDistance" class="form-control" min="0">
+						</div>
+					</div>
+					<div class="form-horizontal form-group row col-xs-12">
+						<label for="newJobSize" class="col-sm-4 control-label">Rozmiar firmy:</label>
+						<div class="col-sm-8">
+							<input type="number" name="newJobSize" id="newJobSize" class="form-control" min="0">
+						</div>
+					</div>
+					<div class="row col-xs-12">
+						<p class="text-center">
+							<button type="button" class="btn btn-default" id="addJob">Dodaj</button>
+							<button type="button" class="btn btn-default" id="cleanJobs">Wyczyść</button>
+						</p>
+					</div>
+					<div class="jobs row col-xs-12">
+						<ul id="jobsList">
+							
+						</ul>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<h1>Wyniki</h1>
+					<p class="text-center"><button type="button" class="btn btn-default" id="jobCheck">Oblicz</button></p>
+					<ul id="jobsResults" class="text-center">
+						
+					</ul>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')</script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/bootstrap.min.js"></script>
+	<script src="scripts/core.js"></script>
+	<script src="scripts/fuzzifier.js"></script>
+	<script src="scripts/ruleBase.js"></script>
+	<script src="scripts/inferenceEngine.js"></script>
+	<script src="scripts/defuzzifier.js"></script>
+	<script src="scripts/tests.js"></script>
+	<script>
+		var jobCounter = 1;
+		var jobsList = [];
+		function addJob(salary, distance, size) {
+			jobsList.push({
+				id: jobCounter,
+				salary: salary,
+				distance: distance,
+				size: size
+			});
+			var listItem = document.createElement('li');
+			listItem.innerHTML = '#' + jobCounter++ + ' &nbsp;&nbsp; Pensja: ' + salary + ' &nbsp;&nbsp; Odległość: ' 
+			+ distance + ' &nbsp;&nbsp; Rozmiar: ' + size;
+			document.getElementById("jobsList").appendChild(listItem);
+		}
+		document.getElementById("addJob").addEventListener("click", function(e) {
+			addJob(+document.getElementById("newJobSalary").value,
+					+document.getElementById("newJobDistance").value,
+					+document.getElementById("newJobSize").value);
+
+		});
+		document.getElementById("cleanJobs").addEventListener("click", function(e) {
+			document.getElementById("jobsList").innerHTML = '';
+			jobsList = [];
+			jobCounter = 1;
+		});
+		document.getElementById("jobCheck").addEventListener("click", function(e) {
+			var salary = +document.getElementById("salary").value || jobCheck.settings.salary,
+				distance = +document.getElementById("distance").value || jobCheck.settings.distance,
+				size = +document.getElementById("size").value || jobCheck.settings.size;
+			console.log('Settings: ');
+			console.log('Salary: ' + salary + ', Distance: ' + distance + ', Size: ' + size);
+			document.getElementById("jobsResults").innerHTML = '';
+			jobCheck.setSettings(salary, distance, size);
+			jobsList = jobCheck.run(jobsList);
+			// for(var i = 0; i < jobsList.length; i++) {
+			// 	var listItem = document.createElement('li');
+			// 	listItem.innerHTML = '#' + jobsList[i].id + ' Dopasowanie: ' + jobsList[i].match.toFixed(2) + '%';
+			// 	document.getElementById("jobsResults").appendChild(listItem);
+			// }
+			var printJobsList = function(list, index) {
+				var listItem = document.createElement('li');
+				listItem.innerHTML = '#' + list[index].id + ' Dopasowanie: ' + list[index].match.toFixed(2) + '%';
+				document.getElementById("jobsResults").appendChild(listItem);
+				if(++index < list.length)
+					setTimeout(function() {
+						printJobsList(list, index);
+					}, 200);
+			}
+			printJobsList(jobsList, 0);
+		});
+
+		//Tests
+		addJob(2000, 2, 20);
+		addJob(3000, 1, 100);
+		addJob(1600, 6, 10);
+		addJob(6000, 5, 20000);
+		addJob(2600, 1, 3000);
+	</script>
+  </body>
+</html>
